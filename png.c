@@ -20,6 +20,7 @@
 #include "config.h"
 #ifdef FBV_SUPPORT_PNG
 #include <png.h>
+#include <pngstruct.h>
 #include "fbv.h"
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -69,7 +70,7 @@ int fh_png_load(char *name,unsigned char *buffer, unsigned char ** alpha,int x,i
         fclose(fh); return(FH_ERROR_FORMAT);
     }
     rp=0;
-    if (setjmp(png_ptr->jmpbuf))
+    if (setjmp(png_ptr->longjmp_buffer))
     {
 	png_destroy_read_struct(&png_ptr, &info_ptr, (png_infopp)NULL);
         if(rp) free(rp);
@@ -161,7 +162,7 @@ int fh_png_getsize(char *name,int *x,int *y)
         fclose(fh); return(FH_ERROR_FORMAT);
     }
     rp=0;
-    if (setjmp(png_ptr->jmpbuf))
+    if (setjmp(png_ptr->longjmp_buffer))
     {
 	png_destroy_read_struct(&png_ptr, &info_ptr, (png_infopp)NULL);
         if(rp) free(rp);

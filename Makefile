@@ -6,13 +6,20 @@
 include Make.conf
 
 CC	= gcc 
-CFLAGS  = -O2 -Wall -D_GNU_SOURCE -I/usr/local/include -L/usr/local/lib
+#CC	= clang
+
+LOCALBASE	?= /usr/local
+
+PNG_CFLAGS	!= $(LOCALBASE)/bin/libpng15-config --cflags
+PNG_LIBS	!= $(LOCALBASE)/bin/libpng15-config --libs
+
+CFLAGS  = -O2 -Wall -D_GNU_SOURCE $(PNG_CFLAGS) -I$(LOCALBASE)/include
 
 SOURCES	= main.c jpeg.c gif.c png.c bmp.c fb_display.c transforms.c
 OBJECTS	= ${SOURCES:.c=.o}
 
 OUT	= fbv
-LIBS	= -lgif -L/usr/X11R6/lib -ljpeg -lpng
+LIBS	= -L$(LOCALBASE)/lib -lgif -ljpeg $(PNG_LIBS)
 
 all: $(OUT)
 	@echo Build DONE.
