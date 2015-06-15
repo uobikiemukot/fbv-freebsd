@@ -10,8 +10,8 @@ CC	= gcc
 
 LOCALBASE	?= /usr/local
 
-PNG_CFLAGS	!= $(LOCALBASE)/bin/libpng15-config --cflags
-PNG_LIBS	!= $(LOCALBASE)/bin/libpng15-config --libs
+PNG_CFLAGS	!= $(LOCALBASE)/bin/libpng-config --cflags
+PNG_LIBS	!= $(LOCALBASE)/bin/libpng-config --ldflags
 
 CFLAGS  = -O2 -Wall -D_GNU_SOURCE $(PNG_CFLAGS) -I$(LOCALBASE)/include
 
