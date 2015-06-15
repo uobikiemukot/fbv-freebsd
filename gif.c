@@ -76,12 +76,16 @@ int fh_gif_load(char *name,unsigned char *buffer, unsigned char ** alpha, int x,
     char *slb;
     GifFileType *gft;
     GifByteType *extension;
-    int extcode;
+    int extcode, err;
     GifRecordType rt;
     ColorMapObject *cmap;
     int cmaps;
 
+#if GIFLIB_MAJOR >= 5
+    gft=DGifOpenFileName(name, &err);
+#else
     gft=DGifOpenFileName(name);
+#endif
     if(gft==NULL){printf("err5\n"); gflush;} //////////
     do
     {
@@ -181,10 +185,14 @@ int fh_gif_getsize(char *name,int *x,int *y)
     int px,py;
     GifFileType *gft;
     GifByteType *extension;
-    int extcode;
+    int extcode, err;
     GifRecordType rt;
 
+#if GIFLIB_MAJOR >= 5
+    gft=DGifOpenFileName(name, &err);
+#else
     gft=DGifOpenFileName(name);
+#endif
     if(gft==NULL) gflush;
     do
     {
