@@ -5,8 +5,7 @@
 
 include Make.conf
 
-CC	= gcc 
-#CC	= clang
+CC	= cc
 
 LOCALBASE	?= /usr/local
 
